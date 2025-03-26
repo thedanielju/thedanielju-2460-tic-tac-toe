@@ -138,6 +138,7 @@ void printOutcome() {
 }
 
 int main() {
+    printf("Welcome to Daniel's Tic Tac Toe!\n");
     //initialize board
     for (int i = 0; i < 9; i++) {
         board[i] = ' ';
@@ -162,7 +163,7 @@ int main() {
             break;
         }
     }
-    
+    printf("Thanks for playing, goodbye!\n");
     return 0;
 }
 
