@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-// Global variables
+//global variables
 char board[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
-int PLAYER = 1; // 1 for X, 0 for O
-char IN;        // Input character
-int OUT = 0;    // Outcome of the game
+int PLAYER = 1; //1 for X, 0 for O
+char IN;        //input character
+int OUT = 0;    //outcome of the game
 
-// Function prototypes
+//fnction models
 void getValidInput();
 void updateBoard();
 void drawBoard();
@@ -21,27 +21,27 @@ void getValidInput() {
     int position;
     
     while (!valid) {
-        // Prompt based on current player
+        //prompt for each player
         if (PLAYER == 1) {
             printf("X - Which square? [1-9] ");
         } else {
             printf("O - Which square? [1-9] ");
         }
         
-        // Get input
+        //get user input
         scanf(" %c", &input);
         
-        // Check if input is 'q' for quit
+        //if q, quit
         if (input == 'q' || input == 'Q') {
             IN = 'q';
             return;
         }
         
-        // Check if input is a number between 1 and 9
+        //check input, 1-9
         if (input >= '1' && input <= '9') {
-            position = input - '1'; // Convert to 0-8 index
+            position = input - '1'; //convert num to position on board
             
-            // Check if the position is already occupied
+            //check for occupied board position
             if (board[position] == ' ') {
                 valid = 1;
                 IN = input;
@@ -55,17 +55,17 @@ void getValidInput() {
 }
 
 void updateBoard() {
-    int position = IN - '1'; // Convert character '1'-'9' to index 0-8
+    int position = IN - '1'; //convert character 1-9 to board position
     
-    // Update the board based on the current player
+    //update position to player selection
     if (PLAYER == 1) {
         board[position] = 'X';
     } else {
         board[position] = 'O';
     }
     
-    // Switch player
-    PLAYER = 1 - PLAYER; // Toggle between 0 and 1
+    //switch player
+    PLAYER = 1 - PLAYER; //switch by going from 1 to 0, vice versa
 }
 
 void drawBoard() {
@@ -84,21 +84,21 @@ void drawBoard() {
 }
 
 int evalBoard() {
-    // Check rows for a win
+    //win con
     for (int i = 0; i < 9; i += 3) {
         if (board[i] != ' ' && board[i] == board[i+1] && board[i] == board[i+2]) {
             return (board[i] == 'X') ? 1 : 2;
         }
     }
     
-    // Check columns for a win
+    //3 in column
     for (int i = 0; i < 3; i++) {
         if (board[i] != ' ' && board[i] == board[i+3] && board[i] == board[i+6]) {
             return (board[i] == 'X') ? 1 : 2;
         }
     }
     
-    // Check diagonals for a win
+    //3 in diagonal
     if (board[0] != ' ' && board[0] == board[4] && board[0] == board[8]) {
         return (board[0] == 'X') ? 1 : 2;
     }
@@ -107,7 +107,7 @@ int evalBoard() {
         return (board[2] == 'X') ? 1 : 2;
     }
     
-    // Check for a draw (cat game)
+    //check if draw
     int boardFull = 1;
     for (int i = 0; i < 9; i++) {
         if (board[i] == ' ') {
@@ -117,10 +117,10 @@ int evalBoard() {
     }
     
     if (boardFull) {
-        return 3; // Cat game
+        return 3;
     }
     
-    return 0; // Game still in progress
+    return 0; //continue the game, not over
 }
 
 void printOutcome() {
@@ -138,17 +138,16 @@ void printOutcome() {
 }
 
 int main() {
-    // Initialize the board with numbers 1-9
+    //initialize board
     for (int i = 0; i < 9; i++) {
         board[i] = ' ';
     }
     
-    // Main game loop
+    //main gameplay loop
     while (1) {
         drawBoard();
         getValidInput();
         
-        // Check if user wants to quit
         if (IN == 'q' || IN == 'Q') {
             printf("Game terminated by user.\n");
             break;
